@@ -15,7 +15,7 @@
 #include <math.h>
 #include <time.h>
 
-void print_vector(double *vec, int n)
+void print_vector(float *vec, int n)
 {
     int i;
     for (i = 0; i < n; i++)
@@ -25,7 +25,7 @@ void print_vector(double *vec, int n)
     printf("\n");
 }
 
-void print_matrix(const double *A, int m, int n)
+void print_matrix(const float *A, int m, int n)
 {
     int i;
     printf("[");
@@ -52,7 +52,7 @@ double get_sec()
     return (time.tv_sec + 1e-6 * time.tv_usec);
 }
 
-void randomize_matrix(double *A, int m, int n)
+void randomize_matrix(float *A, int m, int n)
 {
     srand(time(NULL));
     int i, j;
@@ -60,7 +60,7 @@ void randomize_matrix(double *A, int m, int n)
     {
         for (j = 0; j < n; j++)
         {
-            A[i * n + j] = (double)(rand() % 100) + 0.01 * (rand() % 100);
+            A[i * n + j] = (float)(rand() % 100) + 0.01 * (rand() % 100);
             if (rand() % 2 == 0)
             {
                 A[i * n + j] *= -1.0;
@@ -69,7 +69,7 @@ void randomize_matrix(double *A, int m, int n)
     }
 }
 
-void copy_matrix(double *src, double *dest, int n)
+void copy_matrix(float *src, float *dest, int n)
 {
     int i;
     for (i = 0; src + i && dest + i && i < n; i++)
@@ -82,9 +82,9 @@ void copy_matrix(double *src, double *dest, int n)
     }
 }
 
-void verify_matrix(double *mat1, double *mat2, int n)
+void verify_matrix(float *mat1, float *mat2, int n)
 {
-    double diff = 0.0;
+    float diff = 0.0;
     int i;
     for (i = 0; mat1 + i && mat2 + i && i < n; i++)
     {
