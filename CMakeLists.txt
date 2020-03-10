@@ -1,0 +1,7 @@
+cmake_minimum_required(VERSION 2.8)
+link_directories(../mkldnn/lib/)
+include_directories(mkldnn/include/)
+set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -Wall -liomp5 -lmklml")
+#(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -O3 -lmkl_core -Wall -DMKL_ILP64 -m64 -lmkl_intel_lp64 -lmkl_intel_thread -liomp5 -lpthread -lm -lmkl_avx512")
+add_executable(mypdist pdist.c utils.c test.c)
+#target_link_libraries(mypdist )
