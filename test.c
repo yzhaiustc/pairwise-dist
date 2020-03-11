@@ -28,6 +28,7 @@ int main(int argc, char* argv[])
     }
 
     printf("X: %d - by - %d\nY: %d - by - %d\nDist: %d - by - %d\n", m, k, n, k, m, n);
+    printf("We provide the same output as pdist2(X, Y, 'euclidean' in MATLAB)");
 
     float *X, *Y, *D;
     double t0, t1;
@@ -44,12 +45,22 @@ int main(int argc, char* argv[])
     fflush(stdout);
 
     t0 = get_sec();
-    cblas_sgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, m, n, k, 1., X, k, Y, n, 1., D, n);
+    mypdist(X, Y, D, m, n, k);
     t1 = get_sec();
     printf("CBLAS : Elapsed time: %8.6fs, Perf: %8.6f \n", t1-t0, \
         2 * (m / 1000.) * (n / 1000.) * (k / 1000.) / (t1 - t0));    
     fflush(stdout);
-    
+
+    if (0)
+    {
+        printf("\n################# X #################\n");
+        print_matrix(X, m, k);
+        printf("\n################# Y #################\n");
+        print_matrix(Y, n, k);
+        printf("\n################# D #################\n");
+        print_matrix(D, m, n);
+    }
+
 
     free(X); X = NULL;
     free(Y); Y = NULL;
