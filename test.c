@@ -47,7 +47,7 @@ int main(int argc, char* argv[])
     t0 = get_sec();
     mypdist(X, Y, D, m, n, k);
     t1 = get_sec();
-    printf("CBLAS : Elapsed time: %8.6fs, Perf: %8.6f \n", t1-t0, \
+    printf("PDIST : Elapsed time: %8.6fs, Perf: %8.6f \n", t1-t0, \
         2 * (m / 1000.) * (n / 1000.) * (k / 1000.) / (t1 - t0));    
     fflush(stdout);
 

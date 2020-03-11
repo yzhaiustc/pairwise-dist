@@ -80,6 +80,7 @@ void mypdist(const float *X, const float *Y, float *D, int m, int n, int k)
     t_total += (t1 - t0);
 
     printf("t-total : %f, t-gemm: %f, ratio: %f %%\n", t_total, t_gemm, t_gemm / t_total * 100);
+    printf("potential improvement ratio by fusing: %f %%\n", 100. - t_gemm / t_total * 100);
 #endif
     return;
 }

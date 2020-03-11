@@ -21,6 +21,14 @@ Output
 * Unix-like system (Mac OS or Linux - CentOS/RedHat/Ubuntu)
 
 ## How to build
+On whatever platforms, you first clone my repository and step into the directory.
+```
+$ git clone https://github.com/yzhaiustc/pairwise-dist.git
+$ cd pairwise-dist
+```
+
+Then you download the required dynamic libraries and build.
+
 *On Mac system*
 ```
 $ wget https://github.com/intel/mkl-dnn/releases/download/v0.18/mklml_mac_2019.0.3.20190220.tgz
