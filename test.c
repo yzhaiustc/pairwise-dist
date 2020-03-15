@@ -43,12 +43,16 @@ int main(int argc, char* argv[])
 
     printf("\n################# My PDIST #################\n");
     fflush(stdout);
-
+    int i, N = 100;
     t0 = get_sec();
-    mypdist(X, Y, D, m, n, k);
+    for (i = 0; i < N; i++)
+    {
+	mypdist(X, Y, D, m, n, k);
+    }
+    //mypdist(X, Y, D, m, n, k);
     t1 = get_sec();
-    printf("PDIST : Elapsed time: %8.6fs, Perf: %8.6f \n", t1-t0, \
-        2 * (m / 1000.) * (n / 1000.) * (k / 1000.) / (t1 - t0));    
+    printf("PDIST : Elapsed time: %8.6fs, Perf: %8.6f \n", (t1-t0)/N, \
+        2 * (m / 1000.) * (n / 1000.) * (k / 1000.) * N / (t1 - t0));    
     fflush(stdout);
 
     if (0)
