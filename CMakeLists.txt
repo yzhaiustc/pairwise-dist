@@ -12,4 +12,6 @@ if(UNIX AND NOT APPLE)
 endif()
 
 add_executable(mypdist pdist.c utils.c test.c)
+add_executable(copy pdist.c utils.c test_copy.c)
 target_link_libraries(mypdist ${EXTRA_LIBS})
+target_link_libraries(copy ${EXTRA_LIBS})

@@ -84,3 +84,40 @@ void mypdist(const float *X, const float *Y, float *D, int m, int n, int k)
 #endif
     return;
 }
+
+void mycopy_opt(int m, int M, int K, int *idx, float *src, float *dst)
+{
+    int i,k;
+    int K32 = K & -32, K8 = K & -8;
+    float *dst_ptr = dst, *src_ptr;
+    for (k = 0; k < m; k++)
+    {
+        src_ptr = src + idx[k] * K;
+        for (i = 0; i < K32; i+=32) 
+        {
+            _mm_prefetch(dst_ptr+32, _MM_HINT_T0);
+            _mm256_storeu_ps(dst_ptr+i, _mm256_loadu_ps(src_ptr+i));
+            //_mm_prefetch(dst_ptr+40, _MM_HINT_T0);
+            _mm256_storeu_ps(dst_ptr+i+8, _mm256_loadu_ps(src_ptr+i+8));
+            //_mm_prefetch(dst_ptr+48, _MM_HINT_T0);
+            _mm256_storeu_ps(dst_ptr+i+16, _mm256_loadu_ps(src_ptr+i+16));
+            //_mm_prefetch(dst_ptr+56, _MM_HINT_T0);
+            _mm256_storeu_ps(dst_ptr+i+24, _mm256_loadu_ps(src_ptr+i+24));
+        }
+        for (i = K32; i < K8; i++) _mm256_storeu_ps(dst_ptr+i, _mm256_loadu_ps(src_ptr+i));
+        for (i = K8; i < K; i++) *(dst_ptr+i)=*(src_ptr+i);
+        dst_ptr+=K;
+    }
+}
+
+void mycopy_std(int m, int M, int K, int *idx, float *src, float *dst)
+{
+    int i,k,dst_cnt=0;
+    int row_idx;
+    for (k = 0; k < m; k++)
+    {
+        row_idx = idx[k];
+        for (i = 0; i < K; i++) dst[dst_cnt*K+i]=src[row_idx*K+i];
+        dst_cnt++;
+    }
+}
