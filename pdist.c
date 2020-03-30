@@ -95,13 +95,13 @@ void mycopy_opt(int m, int M, int K, int *idx, float *src, float *dst)
         src_ptr = src + idx[k] * K;
         for (i = 0; i < K32; i+=32) 
         {
-            _mm_prefetch(dst_ptr+32, _MM_HINT_T0);
+            _mm_prefetch(src_ptr+40, _MM_HINT_T0);
             _mm256_storeu_ps(dst_ptr+i, _mm256_loadu_ps(src_ptr+i));
-            //_mm_prefetch(dst_ptr+40, _MM_HINT_T0);
+            //_mm_prefetch(src_ptr+48, _MM_HINT_T0);
             _mm256_storeu_ps(dst_ptr+i+8, _mm256_loadu_ps(src_ptr+i+8));
-            //_mm_prefetch(dst_ptr+48, _MM_HINT_T0);
+            _mm_prefetch(src_ptr+56, _MM_HINT_T0);
             _mm256_storeu_ps(dst_ptr+i+16, _mm256_loadu_ps(src_ptr+i+16));
-            //_mm_prefetch(dst_ptr+56, _MM_HINT_T0);
+            //_mm_prefetch(src_ptr+64, _MM_HINT_T0);
             _mm256_storeu_ps(dst_ptr+i+24, _mm256_loadu_ps(src_ptr+i+24));
         }
         for (i = K32; i < K8; i++) _mm256_storeu_ps(dst_ptr+i, _mm256_loadu_ps(src_ptr+i));
