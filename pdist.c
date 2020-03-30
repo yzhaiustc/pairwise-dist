@@ -90,8 +90,10 @@ void mycopy_opt(int m, int M, int K, int *idx, float *src, float *dst)
     int i,k;
     int K32 = K & -32, K8 = K & -8;
     float *dst_ptr = dst, *src_ptr;
+    //#pragma omp parallel for private (i,k,src_ptr,dst_ptr)
     for (k = 0; k < m; k++)
     {
+	//printf("%d, %d\n", omp_get_num_threads(), omp_get_thread_num());
         src_ptr = src + idx[k] * K;
         for (i = 0; i < K32; i+=32) 
         {
@@ -104,7 +106,7 @@ void mycopy_opt(int m, int M, int K, int *idx, float *src, float *dst)
             //_mm_prefetch(src_ptr+64, _MM_HINT_T0);
             _mm256_storeu_ps(dst_ptr+i+24, _mm256_loadu_ps(src_ptr+i+24));
         }
-        for (i = K32; i < K8; i++) _mm256_storeu_ps(dst_ptr+i, _mm256_loadu_ps(src_ptr+i));
+        for (i = K32; i < K8; i+=8) _mm256_storeu_ps(dst_ptr+i, _mm256_loadu_ps(src_ptr+i));
         for (i = K8; i < K; i++) *(dst_ptr+i)=*(src_ptr+i);
         dst_ptr+=K;
     }
